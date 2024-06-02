@@ -3,14 +3,20 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 
+
+
+
+
 const CardItemList = () => {
   const dispatch = useDispatch();
+
+
+
   const productList = useSelector((state) => state.products.productList);
 
 
 
 
-  console.log(productList);
   return (
     <>
       <tbody>

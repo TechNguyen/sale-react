@@ -6,8 +6,6 @@ import SidebarTop from '@views/components/SidebarTop/SidebarTop'
 
 const Layout = ({ children }) => {
 	return (
-
-
 		<div
         class="page-wrapper"
         id="main-wrapper"

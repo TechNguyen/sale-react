@@ -121,11 +121,11 @@ function Navbar() {
                        aria-labelledby="drop2"
                      >
                        <div class="message-body">
-                         <a
+                        l <a
                            href="/user-profile"
                            class="d-flex align-items-center gap-2 dropdown-item"
                          >
-                           <i class="ti ti-user fs-6"></i>
+                           <i cass="ti ti-user fs-6"></i>
                            <p class="mb-0">My Profile</p>
                          </a>
                          <a

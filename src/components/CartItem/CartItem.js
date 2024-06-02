@@ -1,107 +1,59 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  decreaseQuantity,
-  deleteProductFromCart,
-  increaseQuantity,
-} from "../../services/redux/cartSlice/productSlice";
-
-
-function formatCurrencyVND(amount) {
-  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
-} 
-const CartItem = ({ id, imgSrc, name, price, count }) => {
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductToCart } from "../../services/redux/cartSlice/productSlice";
+import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
+const CardItem = ({ id, imgSrc, name, description, price }) => {
   const dispatch = useDispatch();
-  const handleIncreamentQuality = () => {
+
+  function formatCurrencyVND(amount) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  } 
+
+  const handleAddToCart = () => {
     dispatch(
-      increaseQuantity({
+      addProductToCart({
         id,
         imgSrc,
         name,
+        description,
         price,
-        count,
+        count: 1,
       })
     );
   };
-
-  const handleDeleteProduct = () => {
-    dispatch(
-      deleteProductFromCart({
-        id,
-      })
-    );
-  };
-
-  const handleDecreamentQuality = () => {
-    dispatch(
-      decreaseQuantity({
-        id,
-        imgSrc,
-        name,
-        price,
-        count,
-      })
-    );
-  };
-
   return (
-    <>
-      <tr>
-        <th scope="row">
-          <div className="d-flex align-items-center">
-            <img
-              src={imgSrc}
-              className="img-fluid me-5 rounded-circle"
-              style={{ width: "80px", height: "80px" }}
-              alt=""
-            />
-          </div>
-        </th>
-        <td>
-          <p className="mb-0 mt-4">{name}</p>
-        </td>
-        <td>
-          <p className="mb-0 mt-4">{formatCurrencyVND(price)}</p>
-        </td>
-        <td>
-          <div className="input-group quantity mt-4" style={{ width: "100px" }}>
-            <div className="input-group-btn">
-              <button
-                onClick={handleDecreamentQuality}
-                className="btn btn-sm btn-minus rounded-circle bg-light border"
-              >
-                <i className="fa fa-minus"></i>
-              </button>
-            </div>
-            <input
-              type="text"
-              className="form-control form-control-sm text-center border-0"
-              value={count}
-            />
-            <div className="input-group-btn">
-              <button
-                onClick={handleIncreamentQuality}
-                className="btn btn-sm btn-plus rounded-circle bg-light border"
-              >
-                <i className="fa fa-plus"></i>
-              </button>
+    <div className="col-md-6 col-lg-6 col-xl-4">
+      <Link to={`/product/${id}`}>
+      <div className="rounded position-relative fruite-item">
+        <div className="fruite-img">
+          <img src={imgSrc} className="img-fluid w-100 rounded-top" alt="" />
+        </div>
+        <div
+          className="text-white bg-secondary px-3 py-1 rounded position-absolute"
+          style={{ top: "10px", left: "10px" }}
+        >
+          Fruits
+        </div>
+        <div className="p-4 border border-secondary border-top-0 rounded-bottom">
+          <h4>{name}</h4>
+          <p>{description}</p>
+          <div className="d-flex justify-content-between flex-lg-wrap">
+            <p className="text-dark fs-5 fw-bold mb-0">{formatCurrencyVND(price)}</p>
+            <div
+              className="btn border border-secondary rounded-pill px-3 text-primary"
+              onClick={handleAddToCart}
+            >         
+              <i className="fa fa-shopping-bag me-2 text-primary"></i> Add to
+              cart
             </div>
           </div>
-        </td>
-        <td>
-          <p className="mb-0 mt-4">{formatCurrencyVND((price * count).toFixed(2))}</p>
-        </td>
-        <td>
-          <button
-            onClick={handleDeleteProduct}
-            className="btn btn-md rounded-circle bg-light border mt-4"
-          >
-            <i className="fa fa-times text-danger"></i>
-          </button>
-        </td>
-      </tr>
-    </>
+        </div>
+      </div>
+      </Link>
+     
+    </div>
   );
 };
 
-export default CartItem;
+export default CardItem;
